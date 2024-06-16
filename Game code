@@ -1,0 +1,57 @@
+import random
+
+# Initialize and shuffle the deck
+deck = [2] * 4 + [3] * 4 + [4] * 4 + [5] * 4 + [6] * 4 + [7] * 4 + [8] * 4 + [9] * 4 + [10] * 16 + [1] * 4 + [11] * 4
+random.shuffle(deck)
+
+# Draw initial cards for the player and dealer
+player_cards = [deck.pop(), deck.pop()]
+dealer_card = [deck.pop()]
+#
+print(f"Player's initial cards: {player_cards}")
+print(f"Dealer's initial card: {dealer_card}")
+while True:
+    # Calculate current sums
+    player_sum = sum(player_cards)
+    dealer_sum = sum(dealer_card)
+
+        # Player's turn
+    next_move = input("Do you want to hit or stand? ").lower()
+
+    if next_move == "hit":
+        new_card = deck.pop()
+        player_cards.append(new_card)
+        player_sum = sum(player_cards)
+
+        print(f"Your cards: {player_cards} (sum: {player_sum})")
+
+        if player_sum > 21:
+            print("You exceed 21. Dealer wins!")
+            break
+
+    elif next_move == "stand":
+        print(f"Player stands with cards: {player_cards} (sum: {player_sum})")
+
+        # Dealer's turn: hits until reaching 17 or more
+        while dealer_sum < 17:
+            dealer_card.append(deck.pop())
+            dealer_sum = sum(dealer_card)
+
+        print(f"Dealer's cards: {dealer_card} (sum: {dealer_sum})")
+
+        # Determine winner
+        if dealer_sum > 21:
+            print("Dealer exceeds 21. You win!")
+        elif dealer_sum == player_sum:
+           print("It's a tie!")
+        elif dealer_sum > player_sum:
+            print("Dealer wins!")
+        else:
+            print("You win!")
+
+        break
+
+    else:
+        print("Invalid input. Please enter 'hit' or 'stand'.")
+
+
